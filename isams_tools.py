@@ -3,9 +3,7 @@ import logging
 import os
 import sys
 
-from isams_tools.sync import sync
 from isams_tools.register_reminder.register_reminder import run as run_register_reminder
-from isams_tools.data_checks.data_checks import run as run_data_checks
 from settings import DEBUG
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -43,12 +41,7 @@ def dispatch(module, **kwargs):
             run_register_reminder()
         else:
             run_register_reminder(kwargs['stage'])
-    elif module == 'data_checks':
-        run_data_checks()
-    elif module == 'sync':
-        sync.main()
-    else:
-        logger.critical("Incorrect module given")
+            logger.critical("Incorrect module given")
 
 def main():
     # check we've got a settings file

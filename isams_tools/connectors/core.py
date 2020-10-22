@@ -1,10 +1,8 @@
 import logging
 
-from isams_tools.connectors.scf import SCFConnector
 from isams_tools.connectors.isams import iSAMSConnection
 from isams_tools.connectors.isams_api import iSAMSJSONConnection, iSAMSXMLConnection
-from isams_tools.connectors.middle import MiddleConnection
-from settings import CONNECTION_METHOD, ISAMS_DATABASE_SERVER, ISAMS_DATABASE, ISAMS_DATABASE_USER, ISAMS_DATABASE_PASS
+from settings import CONNECTION_METHOD, DATABASE_SERVER, DATABASE, DATABASE_USER, DATABASE_PASSWORD
 
 logger = logging.getLogger('root')
 
@@ -33,17 +31,13 @@ class ConnectionManager:
             self.type = 'XML'
         elif method in ['MSSQL', 'iSAMS']:
             if not connection:
-                self.connection = iSAMSConnection(ISAMS_DATABASE_SERVER, ISAMS_DATABASE_USER, ISAMS_DATABASE_PASS,
-                                                  ISAMS_DATABASE)
+                self.connection = iSAMSConnection(DATABASE_SERVER, DATABASE_USER, DATABASE_PASS,
+                                                  DATABASE)
             else:
                 self.connection = iSAMSConnection(connection['server'], connection['user'], connection['password'],
                                                   connection['database'])
 
             self.type = 'MSSQL'
-        elif method == 'scf':
-                connection = SCFConnector(connection['server'], connection['user'], connection['password'], connection['database'])
-        elif method == 'middle':
-            connection = MiddleConnector(connection['server'], connection['user'], connection['password'], connection['database'])
         else:
             exit("Connection method not supported")
 

@@ -40,17 +40,3 @@ In your Batch API methods, you need to enable the following:
 # runs the final reminder at 8:45am Monday-Friday
 45 8 * * 1-5 /usr/bin/python3 /path/to/isams-tools/isams_tools.py register_reminder --args 3 >/dev/null 2>&1
 ```
-
-Data Checks
------------
-No setup required, but it requires database access, it does not work with the API.
-
-The module has checks for the following common data issues, upon finding any, it emails a specified email in `settings.py`
-* Show duplicate pupil entries in set lists 
-* Show mismatches between timetabled teachers and specified set teachers
-* Show duplicate grade entries in a given report cycle
-* Show pupils in more than one set for the same subject
-
-**Example usage**
-
-`python3 /path/to/isams-tools/isams_tools.py data_checks`

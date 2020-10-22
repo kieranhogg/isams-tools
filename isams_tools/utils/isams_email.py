@@ -69,3 +69,6 @@ class ISAMSEmail:
         except Exception as exc:
             logger.critical("Mail error: " + str(exc))
             sys.exit(1)
+
+    def __str__(self):
+        return str(self.email)

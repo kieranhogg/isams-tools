@@ -1,7 +1,7 @@
 import datetime as dt
 import logging
+import sys
 
-from isams_tools.connectors import isams_api
 from isams_tools.connectors.core import ConnectionManager
 from isams_tools.utils.isams_email import ISAMSEmail
 from settings import *
@@ -11,8 +11,7 @@ if __name__ == "__main__":
     sys.stderr.write('Please use bin/isams_tools instead\n')
     sys.exit(1)
 
-logger = logging.getLogger('register_reminder')
-
+logger = logging.getLogger()
 
 def send_tutor_emails(unregistered_students, stage):
     """Prepares the email list and email templates in order to send them
@@ -80,8 +79,11 @@ def send_tutor_emails(unregistered_students, stage):
     email = ISAMSEmail(EMAIL['subject'], message, to, EMAIL['from'], cc, bcc)
 
     if SEND_EMAILS:
-        email.send()
+        # email.send()
+        print(email)
+        pass
     else:
+        print(email)
         logger.debug("Email not sent as we're in debug mode")
 
 
@@ -108,7 +110,6 @@ class RegisterReminder:
 
         # compile a unique list of tutors with unregistered kids
         unregistered_students = self.connection.get_unregistered_students()
-        
         # no point sending a blank email
         if len(unregistered_students) > 0:
             logger.info("{0} students unregistered, emailing".format(str(len(unregistered_students))))
